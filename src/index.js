@@ -7,12 +7,13 @@ const app = express()
 const projects = []
 
 app.use(express.json())
+
 //listar projects
 app.get('/projects', (req, res) => {
-     const {title} =  req.query
+    const { title } = req.query
     const results = title
-    ? projects.filter(project => project.title.includes(title))
-    : projects
+        ? projects.filter(project => project.title.includes(title))
+        : projects
     return res.json(results)
 })
 
@@ -31,8 +32,8 @@ app.put('/project/:id', (req, res) => {
 
     const projecIndex = projects.findIndex(project => project.id === id)
     if (projecIndex < 0)
-    return res.status(400).json({ msg: "project not found...."})
-    
+        return res.status(400).json({ msg: "project not found...." })
+
     const project = { id, title, owner }
     projects[projecIndex] = project
     return res.json(project)
@@ -41,13 +42,13 @@ app.put('/project/:id', (req, res) => {
 //deleta project
 app.delete('/project/:id', (req, res) => {
     const { id } = req.params
-   
+
     const projecIndex = projects.findIndex(project => project.id === id)
     if (projecIndex < 0) {
-       return res.status(400).json({ msg: "project not found...." }
+        return res.status(400).json({ msg: "project not found...." }
         )
     }
-    projects.splice(projecIndex,1)
+    projects.splice(projecIndex, 1)
     return res.status(204).send()
 })
 
